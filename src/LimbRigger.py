@@ -151,7 +151,7 @@ class LimbRiggerWidget(MayaWindow): # LimbRigger maya widget menu
     def __init__(self): # constructor for rigger widget parts
         super().__init__() 
         self.rigger = LimbRigger() # gives function to rigger variable
-        self.setWindowTitle("Limb Rigger")
+        self.setWindowTitle("Limb Rigger v1.0.0")
 
         self.masterLayout = QVBoxLayout() # gets layout from Qt
         self.setLayout(self.masterLayout) # gives new layout to setLayout function
