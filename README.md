@@ -2,7 +2,7 @@
 
 ## Limb Rigger
 
-[Limb Rigger]("./src/LimbRigger.py")
+<img src="./assets/LimbRigger.png" width=200>
 
 [Github](https://github.com/FreezyDev07/MayaPlugins2025Spring)
 
