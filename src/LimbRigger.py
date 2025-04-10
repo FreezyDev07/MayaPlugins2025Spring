@@ -7,6 +7,8 @@ import maya.mel as mel
 import maya.cmds as mc # imports maya command menu so we can do maya commands thru python
 from PySide2.QtGui import QColor
 
+# peepee
+
 def GetMayaMainWindow():  # gets main window from maya
     mainWindow = omui.MQtUtil.mainWindow()
     return shiboken2.wrapInstance(int(mainWindow), QMainWindow)
