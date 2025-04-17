@@ -31,7 +31,7 @@ class ProxyGenerator:
             print(f"{self.model} is not bound with any joint!")
             return
         
-        self.skin = skin
+        self.skin = skin[0]
         self.jnts = jnts
         print(f"found model: {self.model} with ski:n {self.skin} and joints: {self.jnts}")
 
