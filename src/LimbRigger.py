@@ -1,30 +1,15 @@
+import importlib
+import MayaUtils
+importlib.reload(MayaUtils)
+
+from MayaUtils import MayaWindow
 from PySide2.QtGui import QColor
-from PySide2.QtWidgets import QColorDialog, QHBoxLayout, QLabel, QLineEdit, QMainWindow, QMessageBox, QPushButton, QSlider, QVBoxLayout, QWidget #this imports all ui widget we are going to use
+from PySide2.QtWidgets import QColorDialog, QHBoxLayout, QLabel, QLineEdit, QMessageBox, QPushButton, QSlider, QVBoxLayout, QWidget
 from PySide2.QtCore import Qt, Signal
 from maya.OpenMaya import MVector
-import maya.OpenMayaUI as omui
 import maya.mel as mel
-import shiboken2
-
-def GetMayaMainWindow()->QMainWindow:
-    mainWindow = omui.MQtUtil.mainWindow()
-    return shiboken2.wrapInstance(int(mainWindow), QMainWindow)
-
-def DeleteWidgetWithName(name):
-    for widget in GetMayaMainWindow().findChildren(QWidget, name):
-        widget.deleteLater()
-
-class MayaWindow(QWidget):
-    def __init__(self):
-        super().__init__(parent = GetMayaMainWindow())
-        DeleteWidgetWithName(self.GetWidgetUniqueName())
-        self.setWindowFlags(Qt.WindowType.Window)
-        self.setObjectName(self.GetWidgetUniqueName())
-
-    def GetWidgetUniqueName(self):
-        return "dsfsdfsdfisdfhsdlfie34234hdsi34hsdfi"
-
 import maya.cmds as mc
+
 class LimbRigger:
     def __init__(self):
         self.root = ""
@@ -186,10 +171,6 @@ class LimbRiggerWidget(MayaWindow):
         rigLimbBtn = QPushButton("Rig Limb")
         rigLimbBtn.clicked.connect(lambda : self.rigger.RigLimb())
         self.masterLayout.addWidget(rigLimbBtn)
-
-        colorChangeBtn = QPushButton("Color Change")
-        colorChangeBtn.clicked.connect(self.ColorChangeBtnClicked)
-        self.masterLayout.addWidget(colorChangeBtn)
     
     def ColorPickerChanged(self, newColor: QColor):
         self.rigger.controllerColor[0] = newColor.redF()
@@ -208,20 +189,6 @@ class LimbRiggerWidget(MayaWindow):
         except Exception as e:
             QMessageBox.critical(self, "Error", f"{e}")
 
-    def ColorChangeBtnClicked(self, newColor: QColor):
-        try:
-            self.rigger.controllerColor[0] = newColor.redF()
-            self.rigger.controllerColor[1] = newColor.greenF()
-            self.rigger.controllerColor[2] = newColor.blueF()
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"{e}")
-
-        mc.setAttr(".overrideEnabled", 1)
-        mc.setAttr(".overrideRGBColors", 1)
-        mc.setAttr(".overrideColorRGB", self.controllerColor[0], self.controllerColor[1], self.controllerColor[2], type="double3")
-
 
 limbRiggerWidget = LimbRiggerWidget()
 limbRiggerWidget.show()
-
-GetMayaMainWindow()
